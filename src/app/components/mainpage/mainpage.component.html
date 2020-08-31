@@ -1,0 +1,53 @@
+<app-wrapperV *ngIf="disposition_menu; else elseBlock">
+    <div class="container-fluid">
+        <h1>Liste des utilisateurs dans la base de données de <span style="text-transform: uppercase;color:#318fb5;text-decoration:underline">Web Consult</span></h1>
+        <table class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">#ID</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prenom</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Adresse</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of listeUsers">
+                    <th style="color:#ff7171">{{ user.id }}</th>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.prenom }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.adresse }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</app-wrapperV>
+<ng-template #elseBlock>
+    <app-wrapperH>
+        <div class="container-fluid">
+            <h1>Liste des utilisateurs dans la base de données de <span style="text-transform: uppercase;color:#318fb5;text-decoration:underline">Web Consult</span></h1>
+            <table class="table table-striped table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">#ID</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Prenom</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Adresse</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of listeUsers">
+                        <th style="color:#ff7171">{{ user.id }}</th>
+                        <td>{{ user.nom }}</td>
+                        <td>{{ user.prenom }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.adresse }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </app-wrapperH>
+</ng-template>
+<router-outlet></router-outlet>

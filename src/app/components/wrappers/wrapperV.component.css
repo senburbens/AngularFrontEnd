@@ -1,0 +1,24 @@
+.first_main_container {
+    min-width: 751px;
+}
+
+.second_main_container {
+    height: 91vh;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    padding: 0;
+    overflow-y: hidden;
+}
+
+nav {
+    background-color: black;
+}
+
+main {
+    overflow-y: scroll;
+}
+
+main div.container-fluid {
+    height: 100%;
+    padding-top: 10px !important;
+}

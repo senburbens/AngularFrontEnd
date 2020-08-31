@@ -1,0 +1,17 @@
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    color: #ff7171;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+h1:hover {
+    color: #318fb5;
+}
+
+thead th {
+    color: #ff7171;
+}

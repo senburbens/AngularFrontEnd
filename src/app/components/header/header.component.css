@@ -1,0 +1,10 @@
+header {
+    background-color: #f7f2e7 !important;
+    border-bottom: 2px solid lightblue !important;
+}
+
+.navbar-brand {
+    color: #318fb5;
+    font-weight: bold;
+    font-size: 1.5em;
+}

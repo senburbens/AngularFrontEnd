@@ -1,0 +1,47 @@
+<div class="btn">
+    <span class="fas fa-bars"></span>
+</div>
+<nav class="sidebar">
+    <ul>
+        <li>
+            <a href="#" class="feat-btn"><i class="fas fa-medkit"></i>
+        <!-- <span class="fas fa-caret-down first"></span> -->
+      </a>
+            <ul class="feat-show">
+                <li><a href="#">Pages</a></li>
+                <li><a href="#">Elements</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="serv-btn"><i class="fas fa-ambulance"></i>
+                <!-- <span class="fas fa-caret-down second"></span> -->
+            </a>
+            <ul class="serv-show">
+                <li><a href="#">App Design</a></li>
+                <li><a href="#">Web Design</a></li>
+            </ul>
+        </li>
+        <li><a href="#"><i class="fas fa-stethoscope"></i></a></li>
+        <li><a href="#"><i class="fas fa-hospital"></i></a></li>
+        <li><a href="#"><i class="fas fa-prescription"></i></a></li>
+        <li><a href="#"><i class="fas fa-wheelchair"></i></a></li>
+    </ul>
+</nav>
+
+<script>
+    $('.btn').click(function() {
+        $(this).toggleClass("click");
+        $('.sidebar').toggleClass("show");
+    });
+    $('.feat-btn').click(function() {
+        $('nav ul .feat-show').toggleClass("show");
+        $('nav ul .first').toggleClass("rotate");
+    });
+    $('.serv-btn').click(function() {
+        $('nav ul .serv-show').toggleClass("show1");
+        $('nav ul .second').toggleClass("rotate");
+    });
+    $('nav ul li').click(function() {
+        $(this).addClass("active").siblings().removeClass("active");
+    });
+</script>

@@ -1,0 +1,28 @@
+div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+p {
+    font-weight: bold;
+    font-size: 2em;
+    text-align: center;
+}
+
+p span {
+    color: #ff7171;
+}
+
+#_404 {
+    color: black;
+    font-size: 6em;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#_404+p {
+    position: relative;
+    top: -50px;
+}

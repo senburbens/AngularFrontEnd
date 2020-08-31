@@ -1,0 +1,65 @@
+.container {
+    padding: 0;
+}
+
+.loginPage {
+    height: 100vh;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginBox {
+    border: 2px solid #96bef2;
+    min-height: 360px;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    width: 340px;
+    overflow: hidden;
+}
+
+form {
+    overflow: hidden;
+}
+
+.loginBox span {
+    display: block;
+    text-align: right;
+}
+
+h1 {
+    color: #96bef2;
+    border-bottom: 2px solid #96bef2;
+    margin-bottom: 26px;
+    text-align: center;
+    font-size: 2em;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.button_div {
+    display: flex;
+    justify-content: space-between;
+}
+
+#error_message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.input_error_message {
+    color: red;
+    text-align: left !important;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 0.8em;
+    text-indent: 5px;
+    margin-top: 2px;
+}

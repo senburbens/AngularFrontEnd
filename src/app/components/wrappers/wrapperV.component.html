@@ -1,0 +1,17 @@
+<!-- <div class="container">
+    <app-header></app-header>
+    <app-menu-vertical></app-menu-vertical>
+    <ng-content></ng-content>
+</div> -->
+<div class="first_main_container">
+    <app-header></app-header>
+    <div class="container-fluid second_main_container">
+        <nav>
+            <app-menu-vertical></app-menu-vertical>
+        </nav>
+        <main>
+            <ng-content></ng-content>
+        </main>
+    </div>
+</div>
+<router-outlet></router-outlet>
