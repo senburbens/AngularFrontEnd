@@ -6,8 +6,7 @@ import { Observable, throwError  } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class ParametersService {
-  
+export class ParametersService {  
   private _url = 'http://localhost:8000/api/parameters?code_param=';
 
   constructor(private _http: HttpClient) {}
@@ -15,6 +14,5 @@ export class ParametersService {
   getParameter(parameterCode: string): Observable<any> {
     this._url = this._url + parameterCode;
     return this._http.get<any>(this._url);
-    // return 'V' || 1 ? false : false;
   }
 }

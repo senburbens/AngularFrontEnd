@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { Login } from '../../../models/login';
 
 @Component({
   selector: 'app-login',
@@ -10,20 +10,24 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
-  //user = new User(0,'prubensmilorme@gmail.com', 'Newbensur3190#');
   loginErrorMessage: string = '';
+  loginModel = new Login('','');
 
   constructor(private _authService: AuthService, private router: Router) {}
+
   ngOnInit(): void {}
 
-  public onSubmit(empForm: NgForm ): void {
-    console.log(empForm.value);
-    if(empForm.touched && empForm.valid){
-      //this._authService.test(this.user).subscribe(
-      this._authService.test().subscribe(
+  public onSubmit(loginForm: NgForm ): void {
+    if(loginForm.touched && loginForm.valid){
+      this._authService.login(this.loginModel.identifiant,this.loginModel.password).subscribe(
         (data) => {
-          this.router.navigate(['/main']);
+          if(data){ // Verifie si un token existe
+            localStorage.setItem("username", loginForm.value.identifiant);
+            localStorage.setItem("token", data['token']);
+            //this._authService.setJwtToken(data['token']);
+            //console.log("from service ", this._authService.getJwtToken());
+            this.router.navigate(['/main']);
+          }
         },
         (error) => {
           this.loginErrorMessage = error;

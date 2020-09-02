@@ -3,33 +3,47 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { User } from '../models/user';
 import * as moment from "moment";
 import { catchError } from 'rxjs/operators';
-import { Observable, throwError  } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { tap } from 'rxjs/operators'; 
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
 
-  private _url = 'http://127.0.0.1:8000/test';
+  private _url = 'http://127.0.0.1:8000/api/login';
+  private _JWT_token = '';
 
   constructor(private _http: HttpClient) {}
+
+  public getJwtToken():string{
+    return this._JWT_token;
+  }
+
+  public setJwtToken(token:string){
+    this._JWT_token = token;
+  }
 
   private errorHandler(error: HttpErrorResponse){
       let errorMsg:string = '';
       if(error.status === 404){
         errorMsg = "Erreur 404 : ressource introuvable !"
+      }else if(error.status === 401){
+        errorMsg = "Erreur 401 : Accès non autorisé !"
       }
       return throwError(errorMsg || error.message);
   }
 
   // public test(user: User):Observable<any> {
-  public test():Observable<any> {
-    return this._http.get<any>(this._url)
-                .pipe(catchError(this.errorHandler));
-  }
+  //public test():Observable<any> {
+    //return this._http.get<any>(this._url)
+                //.pipe(catchError(this.errorHandler));
+  //}
 
-  public login(email:string, password:string ) {
-    return this._http.post<User>('/api/login', {email, password})
+  public login(username:string, password:string ) {
+    console.log('From login function', username, password);
+    return this._http.post(this._url, {"login":username, "password":password})
+               .pipe(catchError(this.errorHandler));
         //.do(res => this.setSession) 
         //.shareReplay();
   }
@@ -41,12 +55,14 @@ export class AuthService {
   }          
 
   public logout() {
-      localStorage.removeItem("id_token");
-      localStorage.removeItem("expires_at");
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      this.setJwtToken('');
   }
 
   public isLoggedIn() {
-      return moment().isBefore(this.getExpiration());
+      //return moment().isBefore(this.getExpiration());
+      return !!localStorage.getItem('token');
   }
 
   public isLoggedOut() {

@@ -19,6 +19,7 @@ export class MainPageComponent implements OnInit {
   ngOnInit(): void {
     // Recupere en base de donnees la valeur du parametre MENU_DISPOSITION_WC 
     // pour l'orientation du menu via un service  et stockage dans la variable disposition_menu
+
     this._parameterService.getParameter('MENU_DISPOSITION_WC')
       .subscribe(data => {          
         let disposition_menu_tableau = Array.from(data);

@@ -6,7 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./wrapperV.component.css'],
 })
 export class WrapperVComponent implements OnInit {
+
+
   constructor() {}
   ngOnInit(): void {
+
   }
 }

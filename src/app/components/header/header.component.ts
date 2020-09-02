@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { AuthService } from '../../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,12 +10,19 @@ import * as moment from 'moment';
 })
 export class HeaderComponent implements OnInit {
 
+  username:string = "";
+
   // public jourActuel:string = moment().format('D MMM YYYY');
   public jourActuel:string = moment().toString();
 
-  constructor() { }
+  constructor(private _authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    this.username = localStorage.getItem("username")
   }
 
+  logout(){
+    this._authService.logout();
+    this.router.navigate(['']);
+  }
 }

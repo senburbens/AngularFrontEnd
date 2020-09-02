@@ -3,19 +3,19 @@
         <span id="error_message">{{ loginErrorMessage }}</span>
         <div class="loginBox">
             <h1><img src="../../assets/evolucare_logo.png" alt="logo evolucare" />WebConsult <img src="../../assets/logo_hw.png" alt="logo hopital web" /></h1>
-            <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+            <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
                 <div class="form-group">
                     <label for="identifiant">Identifiant</label>
-                    <input type="email" required minlength="5" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" class="form-control" id="identifiant" name="identifiant" ngModel #emailControl="ngModel" />
+                    <input type="email" required minlength="5" class="form-control" id="identifiant" name="identifiant" [(ngModel)]="loginModel.identifiant" #emailControl="ngModel" />
                     <span class="input_error_message" *ngIf="emailControl.invalid && emailControl.touched">Email invalide</span>
                 </div>
                 <div class="form-group">
                     <label for="motdepasse">Mot de passe</label>
-                    <input type="password" required minlength="6" class="form-control" id="motdepasse" name="motdepasse" ngModel #passwordControl="ngModel" />
+                    <input type="password" required minlength="6" class="form-control" id="motdepasse" name="motdepasse" [(ngModel)]="loginModel.password" #passwordControl="ngModel" />
                     <span class="input_error_message" *ngIf="passwordControl.invalid && passwordControl.touched">Mot de passe invalide</span>
                 </div>
                 <div class="form-group button_div">
-                    <button class="btn btn-primary" [disabled]="loginForm.invalid">Entrer</button>
+                    <button class="btn btn-primary" type="submit" [disabled]="loginForm.invalid">Entrer</button>
                     <button class="btn btn-danger" (click)="exit($event)">Sortir</button>
                 </div>
             </form>
