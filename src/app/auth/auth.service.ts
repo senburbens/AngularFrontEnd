@@ -20,6 +20,10 @@ export class AuthService {
     return this._JWT_token;
   }
 
+  public getToken():string{
+    return localStorage.getItem('token');
+  }
+
   public setJwtToken(token:string){
     this._JWT_token = token;
   }
