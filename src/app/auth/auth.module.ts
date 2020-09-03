@@ -8,7 +8,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './auth.guard';
 import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
 
-
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
   imports: [CommonModule, FormsModule, HttpClientModule],
