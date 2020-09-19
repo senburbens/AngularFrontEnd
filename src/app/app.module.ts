@@ -11,10 +11,19 @@ import { AuthModule } from './auth/auth.module';
 import { WrapperVComponent } from './components/wrappers/wrapperV.component';
 import { WrapperHComponent } from './components/wrappers/wrapperH.component';
 import { LangDropdownComponent } from './components/lang-dropdown/lang-dropdown.component';
-import { ConsultationComponent } from './components/consultation/consultation.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthInterceptor } from './auth/@services/auth.interceptor';
+import { AgendaModule } from './agenda/agenda.module';
+import { ListUsersResolverService } from './@resolvers/list-users-resolver.service';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { SchedulerComponent } from './scheduler/scheduler.component';
+import{ jqxSchedulerModule } from 'jqwidgets-ng/jqxscheduler';   
+import { JqxResolver } from './@resolvers/jqx.resolver';
+
 
 @NgModule({
   declarations: [
@@ -27,23 +36,35 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     WrapperVComponent,
     WrapperHComponent,
     LangDropdownComponent,
-    ConsultationComponent
+    SchedulerComponent
   ],
   imports: [
+    jqxSchedulerModule,
     BrowserModule, 
-    HttpClientModule, 
     AppRoutingModule, 
     AuthModule,
+    BrowserAnimationsModule,
+    AgendaModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,
           useFactory: HttpLoaderFactory,
           deps: [HttpClient]
       }
+    }),
+    StoreModule.forRoot(reducers, {
+      metaReducers
     })
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [
+    JqxResolver,
+    ListUsersResolverService,
+    {
+    provide : HTTP_INTERCEPTORS,
+    useClass : AuthInterceptor,
+    multi : true
+  }],
+  bootstrap: [ AppComponent ],
 })
 export class AppModule {}
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../auth/@services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   constructor(private _authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    this.username = localStorage.getItem("username")
+    this.username = sessionStorage.getItem('username');
   }
 
   logout(){

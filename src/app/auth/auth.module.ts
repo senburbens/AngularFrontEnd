@@ -1,21 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from './auth.service';
-import { LoginComponent } from './components/login/login.component';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RegisterComponent } from './components/register/register.component';
-import { AuthGuard } from './auth.guard';
-import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
+import { LoginComponent } from './login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { RegisterComponent } from './register/register.component';
+import { RouterModule } from '@angular/router';
+import { TestDirective } from './@directives/test.directive';
+import { LoginPopupModalComponent } from './login-popup-modal/login-popup-modal.component';
+
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
-  imports: [CommonModule, FormsModule, HttpClientModule],
-  providers: [AuthService, AuthGuard,{
-    provide : HTTP_INTERCEPTORS,
-    useClass : AuthInterceptorInterceptor,
-    multi : true
-  }],
-  exports: [LoginComponent, RegisterComponent],
+  declarations: [ LoginComponent, RegisterComponent, TestDirective, LoginPopupModalComponent ],
+  imports: [ CommonModule, FormsModule, HttpClientModule, RouterModule, ReactiveFormsModule  ],
+  exports: [ LoginComponent, RegisterComponent, LoginPopupModalComponent ],
 })
 export class AuthModule {}

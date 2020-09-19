@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Router, NavigationStart, NavigationEnd, Event } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +9,24 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent implements OnInit{
 
-  constructor(private translate: TranslateService){
+  showLoadingIndicator:boolean = true;
+
+  constructor(private _router:Router, private translate: TranslateService){
+
     translate.setDefaultLang('en');
+
+    this._router.events.subscribe(
+      (routerEvent: Event) => {
+        if(routerEvent instanceof NavigationStart){
+          this.showLoadingIndicator = true;
+        }else if(routerEvent instanceof NavigationEnd){
+          this.showLoadingIndicator = false;
+        }
+      }
+    );
   }
   
   ngOnInit(): void {
-    localStorage.setItem("lang","en");
-  }
+      sessionStorage.setItem("lang","en");
+  } 
 }
