@@ -6,7 +6,7 @@
             <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
                 <div class="form-group">
                     <label for="identifiant">Identifiant</label>
-                    <input type="email" [ngClass]="{ 'inputInvalid': emailControl.invalid && emailControl.touched, 'inputValid': emailControl.valid && emailControl.touched}" required minlength="5" class="form-control" id="identifiant" name="identifiant" [(ngModel)]="loginModel.identifiant"
+                    <input type="text" [ngClass]="{ 'inputInvalid': emailControl.invalid && emailControl.touched, 'inputValid': emailControl.valid && emailControl.touched}" required minlength="5" class="form-control" id="identifiant" name="identifiant" [(ngModel)]="loginModel.identifiant"
                         #emailControl="ngModel" />
                     <span class="input_error_message" *ngIf="emailControl.invalid && emailControl.touched">Identifiant invalide</span>
                 </div>
@@ -20,10 +20,10 @@
                     <button class="btn btn-primary" type="submit" [disabled]="loginForm.invalid">Entrer</button>
                     <button class="btn btn-danger" (click)="exit($event)">Sortir</button>
                 </div>
+                <a routerLink="/agenda">Agenda</a>
+                <a routerLink="/agendaday">Agenda Day</a>
             </form>
             <span><a href="#" style="color:#96bef2">Qui sommes-nous ?</a></span>
-            <!-- <a routerLink="agenda" routerLinkActive="active">Agenda</a>
-            <a routerLink="agendaday" routerLinkActive="active">Agenda Day</a> -->
         </div>
     </div>
 </div>

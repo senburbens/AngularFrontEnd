@@ -16,6 +16,7 @@ import { ParametersService } from 'src/app/@shared-services/parameters.service';
 export class LoginPopupModalComponent implements OnInit {
 
   utilisateurInactif:boolean=false;
+  identifiant:string='';
   form: FormGroup;
 
   minutesDisplay = 0;
@@ -46,7 +47,7 @@ export class LoginPopupModalComponent implements OnInit {
         console.log(error);
       }
     );
-
+    this.identifiant = sessionStorage.getItem('username');
     this.resetTimer();
 
     this._authService.userActionOccured.pipe(
@@ -85,7 +86,8 @@ export class LoginPopupModalComponent implements OnInit {
       err => { },
       () => {
         this._authService.logOutUser();
-        this.utilisateurInactif = true;
+        this.identifiant = sessionStorage.getItem('username');
+        this.utilisateurInactif = true;        
         sessionStorage.setItem("utilisateurInactif", "true");
       }
     )

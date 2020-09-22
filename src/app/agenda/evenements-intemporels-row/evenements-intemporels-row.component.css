@@ -1,20 +1,17 @@
-.agenda_row_jours_semaine {
-    /* background-color: lightseagreen; */
+.agenda_evenements_itemporels_row {
     height: 40px;
     display: flex;
 }
 
-.agenda_row_jours_semaine div:not(.first) {
+.agenda_evenements_itemporels_row div:not(.first) {
     flex: 1;
     height: 100%;
-    /* background-color: yellow; */
     border: 1px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background: #EBEBEB;
     border: solid 1px rgba(174, 174, 174, 1);
     border-bottom: none;
     border-right: none;
@@ -22,16 +19,15 @@
     height: 40px;
 }
 
-.agenda_row_jours_semaine div:not(.first):hover {
-    color: red;
+.agenda_evenements_itemporels_row div:not(.first):last-child {
+    border-right: solid 1px rgba(174, 174, 174, 1);
 }
 
-.agenda_row_jours_semaine div:not(.first):last-child {
-    border-right: solid 1px rgba(174, 174, 174, 1);
+.agenda_evenements_itemporels_row div:not(.first):hover {
+    color: red;
 }
 
 .first {
     width: 100px;
-    /* background-color: red; */
     opacity: 0;
 }

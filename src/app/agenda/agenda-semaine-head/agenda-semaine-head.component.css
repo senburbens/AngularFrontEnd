@@ -1,0 +1,9 @@
+.agenda_semaine_head {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    /* background-color: lightgreen; */
+    width: 100%;
+    height: 46px;
+}

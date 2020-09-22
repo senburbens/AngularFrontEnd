@@ -1,0 +1,12 @@
+.agenda_calendrier {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.agenda_calendrier #show1upCal {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}

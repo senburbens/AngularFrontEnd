@@ -12,10 +12,11 @@ import { SchedulerComponent } from './scheduler/scheduler.component';
 import { JqxResolver } from './@resolvers/jqx.resolver';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent, canActivate : [LoginGuard] },
+
   { path: 'main', component: MainPageComponent, canActivate : [AuthGuard], resolve : { usersList : ListUsersResolverService } },
   { path: 'agenda', component: AgendaComponent },
   { path: 'agendaday', component: AgendaDayComponent },
+  { path: 'login', component: LoginComponent, canActivate : [LoginGuard] },
   { path: 'scheduler', component : SchedulerComponent,  resolve : { result : JqxResolver } },
   { path: '', redirectTo : 'login', pathMatch : 'full'},
   { path: '**', component: PageNotFoundComponent }

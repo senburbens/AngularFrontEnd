@@ -1,0 +1,17 @@
+.agenda_semaine {
+    /* margin-left: 10px; */
+    margin-right: 20px;
+    margin-left: 20px;
+    color: rgba(112, 112, 112, 1);
+    height: 27px;
+    text-align: center;
+    font-family: Verdana, Arial !important;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 11pt;
+    cursor: pointer;
+}
+
+.agenda_semaine:hover {
+    color: red;
+}

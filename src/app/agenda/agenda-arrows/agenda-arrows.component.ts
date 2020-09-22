@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-agenda-arrows',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./agenda-arrows.component.css']
 })
 export class AgendaArrowsComponent implements OnInit {
+
+  @Input() rightArrow:boolean;
 
   constructor() { }
 

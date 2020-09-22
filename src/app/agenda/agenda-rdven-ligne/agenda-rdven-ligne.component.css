@@ -1,0 +1,14 @@
+.rdv_en_ligne {
+    position: absolute;
+    right: 22px;
+    top: 14px;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: Verdana, Arial !important;
+}
+
+.rdv_en_ligne:hover {
+    color: #931a25;
+}

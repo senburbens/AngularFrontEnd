@@ -10,7 +10,6 @@ export class JqxResolver implements Resolve<any>{
     constructor(private service: JqxService){}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-console.log('avantservice');
         return  this.service.getListe();
     }
 }

@@ -67,6 +67,6 @@ export class LoginComponent implements OnInit {
 
   public exit($event):void{
     $event.preventDefault();
-    this.router.navigate(['']);
+    this.router.navigate(['login']);
   }
 }

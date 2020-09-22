@@ -1,1 +1,11 @@
-<p>agenda-arrows works!</p>
+<div class="agenda_arrows">
+    <svg class="arrow_right14_g" viewBox="0 0 15.125 22" *ngIf='!rightArrow'>
+        <path fill="rgba(102,102,102,1)" id="arrow_right14_g" d="M 4.125 0 L 0 4.125 L 6.875 11 L 0 17.875 L 4.125 22 L 15.125 11 L 4.125 0 Z">
+        </path>
+    </svg>
+
+    <svg class="arrow_right14" viewBox="6 0 15.125 22" *ngIf='rightArrow'>
+        <path fill="rgba(102,102,102,1)" id="arrow_right14" d="M 10.125 0 L 6 4.125 L 12.875 11 L 6 17.875 L 10.125 22 L 21.125 11 L 10.125 0 Z">
+        </path>
+    </svg>
+</div>
