@@ -4,9 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../@services/auth.service';
 import { Subject, Subscription, timer } from 'rxjs';
-import { take } from 'rxjs/internal/operators/take';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { ParametersService } from 'src/app/@shared-services/parameters.service';
+import { Login } from 'src/app/@models/login';
 
 @Component({
   selector: 'app-login-popup-modal',
@@ -18,6 +18,7 @@ export class LoginPopupModalComponent implements OnInit {
   utilisateurInactif:boolean=false;
   identifiant:string='';
   form: FormGroup;
+  loginModel = new Login('','');
 
   minutesDisplay = 0;
   secondsDisplay = 0;
@@ -29,18 +30,14 @@ export class LoginPopupModalComponent implements OnInit {
 
   ngOnInit(): void{
 
-    //alert(sessionStorage.getItem('utilisateurInactif') === null);
-
     if(sessionStorage.getItem('utilisateurInactif') === null){
       sessionStorage.setItem('utilisateurInactif', 'false');
     }else if (sessionStorage.getItem('utilisateurInactif') === 'true'){
         this.utilisateurInactif = true;
-    }
-    
+    }    
 
     this._parameterService.getParameter("WEBCHIR_TIMEOUT").subscribe(
       data => {
-        // console.log(parseInt(data[0]["valeurParam"]) / 1000 / 60);
         this.endTime = parseInt(data[0]["valeurParam"]) / 1000 / 60;
       },
       error =>{
@@ -122,7 +119,7 @@ export class LoginPopupModalComponent implements OnInit {
   @HostListener('document:keyup', ['$event'])
   @HostListener('document:click', ['$event'])
   @HostListener('document:wheel', ['$event'])
-  @HostListener('document:mousemove', ['$event'])
+  // @HostListener('document:mousemove', ['$event'])
   resetTimerAction() {
     if(sessionStorage.getItem('utilisateurInactif') !== 'true'){
       this._authService.notifyUserAction();

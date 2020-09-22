@@ -20,9 +20,6 @@ import { AgendaModule } from './agenda/agenda.module';
 import { ListUsersResolverService } from './@resolvers/list-users-resolver.service';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
-import { SchedulerComponent } from './scheduler/scheduler.component';
-import{ jqxSchedulerModule } from 'jqwidgets-ng/jqxscheduler';   
-import { JqxResolver } from './@resolvers/jqx.resolver';
 
 
 @NgModule({
@@ -35,11 +32,9 @@ import { JqxResolver } from './@resolvers/jqx.resolver';
     PageNotFoundComponent,
     WrapperVComponent,
     WrapperHComponent,
-    LangDropdownComponent,
-    SchedulerComponent
+    LangDropdownComponent
   ],
   imports: [
-    jqxSchedulerModule,
     BrowserModule, 
     AppRoutingModule, 
     AuthModule,
@@ -57,7 +52,6 @@ import { JqxResolver } from './@resolvers/jqx.resolver';
     })
   ],
   providers: [
-    JqxResolver,
     ListUsersResolverService,
     {
     provide : HTTP_INTERCEPTORS,

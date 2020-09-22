@@ -8,8 +8,6 @@ import { LoginComponent } from './auth/login/login.component';
 import { AgendaComponent } from './agenda/agenda/agenda.component';
 import { AgendaDayComponent } from './agenda/agenda-day/agenda-day.component';
 import { ListUsersResolverService } from './@resolvers/list-users-resolver.service';
-import { SchedulerComponent } from './scheduler/scheduler.component';
-import { JqxResolver } from './@resolvers/jqx.resolver';
 
 const routes: Routes = [
 
@@ -17,13 +15,11 @@ const routes: Routes = [
   { path: 'agenda', component: AgendaComponent },
   { path: 'agendaday', component: AgendaDayComponent },
   { path: 'login', component: LoginComponent, canActivate : [LoginGuard] },
-  { path: 'scheduler', component : SchedulerComponent,  resolve : { result : JqxResolver } },
   { path: '', redirectTo : 'login', pathMatch : 'full'},
   { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
-  //imports: [ RouterModule.forRoot(routes, { enableTracing : true }) ],
   imports: [ RouterModule.forRoot(routes) ],
   exports: [ RouterModule ],
 })

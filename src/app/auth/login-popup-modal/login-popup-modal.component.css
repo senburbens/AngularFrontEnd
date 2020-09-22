@@ -16,7 +16,8 @@
     background-color: white;
     padding: 20px;
     border-radius: 20px;
-    border: 2px solid #96bef2;
+    /* border: 2px solid #96bef2; */
+    box-shadow: 0px 0px 7px #ff7171;
 }
 
 #modal .loginBox .button_div {
@@ -25,9 +26,11 @@
 }
 
 h1 {
-    color: red;
+    color: #ff7171;
     font-weight: bold;
     font-size: 1.2em;
     text-align: center;
     font-style: "cursive";
+    border-bottom: 3px solid #ff7171;
+    padding-bottom: 7px;
 }
