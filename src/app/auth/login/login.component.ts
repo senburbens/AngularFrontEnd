@@ -46,13 +46,7 @@ export class LoginComponent implements OnInit {
     if(loginForm.touched && loginForm.valid){
       this._authService.login(this.loginModel.identifiant,this.loginModel.password).subscribe(
         (data) => {
-          if(data){ // Verifie si un token existe
-            this._authService.setJwtToken(data['token']);
-            this._authService.setIdentifiant(this.loginModel.identifiant);            
-            this._authService.setSessionStorageItem('token', data['token']);
-            this._authService.setSessionStorageItem('username', this.loginModel.identifiant);
-            //this._authService.notifyUserAction();
-
+          if(data){   
             this.router.navigate(['/main']);
           }
         },

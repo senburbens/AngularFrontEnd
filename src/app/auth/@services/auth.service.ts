@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { catchError, tap } from 'rxjs/operators';
 import { Observable, Subject, throwError } from 'rxjs';
 
 @Injectable({
@@ -9,10 +9,8 @@ import { Observable, Subject, throwError } from 'rxjs';
 export class AuthService {
 
   private _url:string = 'http://localhost:8000/api/login';
-
-  private _JWT_token:string = '';
-  private identifiant:string = '';
   private roles:string[] = [];
+  private readonly ROOT_URL = 'http://localhost:8000/api';
 
   _userActionOccured: Subject<void> = new Subject();
   get userActionOccured(): Observable<void> { return this._userActionOccured.asObservable() };
@@ -32,24 +30,11 @@ export class AuthService {
   constructor(private _http: HttpClient) {
   }
 
-  public getJwtToken():string{
-    return this._JWT_token;
-  }
-
-  public setJwtToken(token:string):void{
-    this._JWT_token = token;
-  }
-
-  public getIdentifiant():string{
-    return this.identifiant;
-  }
-
-  public setIdentifiant(identifiant:string):void{
-    this.identifiant = identifiant;
+  public getSessionStorageItem(cle:string):string{
+    return sessionStorage.getItem(cle);
   }
 
   public setSessionStorageItem(cle:string, valeur:string):void{
-    console.log(cle, valeur);
     sessionStorage.setItem(cle, valeur);
   } 
 
@@ -69,7 +54,16 @@ export class AuthService {
 
   public login(username:string, password:string ):Observable<any> {
     return this._http.post(this._url, {"login":username, "password":password})
-               .pipe(catchError(this.errorHandler));
+               .pipe(
+                    tap((data) => {
+
+                        console.log(data);
+                        this.setSessionStorageItem('token', data['token']);
+                        this.setSessionStorageItem('refresh_token', data['refresh_token']);
+                        this.setSessionStorageItem('username', username);
+                    }),
+                    catchError(this.errorHandler)
+                 );
         //.do(res => this.setSession) 
         //.shareReplay();
   }
@@ -77,10 +71,23 @@ export class AuthService {
   public logout() {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('username');
-
-    this.setIdentifiant('');
-    this.setJwtToken('');
     sessionStorage.removeItem('utilisateurInactif');
+    sessionStorage.removeItem('refresh_token');
+  }
+
+
+  public refreshToken():Observable<any> {
+    return this._http.post(`${this.ROOT_URL}/token/refresh`, { 'refresh_token': sessionStorage.getItem('refresh_token') }).pipe(
+      tap((res) => {
+        console.log(res['token']);
+        this.setSessionStorageItem('token', res['token']);
+        this.setSessionStorageItem('refresh_token', res['refresh_token']);
+      }),
+      catchError((error) =>{
+        console.log(error);
+        return throwError(error);
+      })
+    )
   }
 
   public isLoggedIn() {
