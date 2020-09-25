@@ -15,7 +15,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthInterceptor } from './auth/@services/auth.interceptor';
+import { AuthInterceptor } from './auth/@interceptors/auth.interceptor';
 import { AgendaModule } from './agenda/agenda.module';
 import { ListUsersResolverService } from './@resolvers/list-users-resolver.service';
 import { StoreModule } from '@ngrx/store';

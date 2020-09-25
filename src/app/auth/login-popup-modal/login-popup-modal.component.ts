@@ -5,8 +5,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../@services/auth.service';
 import { Subject, Subscription, timer } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
-import { ParametersService } from 'src/app/@shared-services/parameters.service';
-import { Login } from 'src/app/@models/login';
+import { ParametersService } from 'src/app/@services/parameters.service';
+import { Login } from 'src/app/auth/@models/login';
 
 @Component({
   selector: 'app-login-popup-modal',

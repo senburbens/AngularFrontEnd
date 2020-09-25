@@ -5,10 +5,10 @@ import {
   HttpEvent,
   HttpInterceptor, HttpErrorResponse
 } from '@angular/common/http';
-import { BehaviorSubject, empty, Observable, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take, tap } from 'rxjs/operators';
-import { AuthService } from './auth.service';
-import { Router } from '@angular/router';
+import { AuthService } from '../@services/auth.service';
+
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {  
@@ -25,9 +25,12 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     return next.handle(request).pipe(catchError(error => {
-      if (error instanceof HttpErrorResponse && error.status === 401) {
+      if (error instanceof HttpErrorResponse && error.status === 401 && error.error.message === 'Expired JWT Token') {
         sessionStorage.removeItem('token');
         return this.handle401Error(request, next);
+      }else if(error instanceof HttpErrorResponse && error.status === 401){
+          this.authService.logout();
+          return throwError(error);
       }else {
         return throwError(error);
       }
@@ -57,7 +60,6 @@ private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
 }
 
   private addToken(request: HttpRequest<any>, token: string) {
-    console.log('Inside assToken', request);
     return request.clone({
       setHeaders: {
         'Authorization': `Bearer ${token}`

@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, Subject, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
 
-  private _url:string = 'http://localhost:8000/api/login';
-  private roles:string[] = [];
+  // private roles:string[] = [];
   private readonly ROOT_URL = 'http://localhost:8000/api';
 
   _userActionOccured: Subject<void> = new Subject();
@@ -19,16 +19,11 @@ export class AuthService {
     this._userActionOccured.next();
   }
 
-  loginUser() {
-    console.log('user login');
-  }
-
   logOutUser() {
     console.log('user logout');
   }
 
-  constructor(private _http: HttpClient) {
-  }
+  constructor(private _http: HttpClient, private _router:Router) {}
 
   public getSessionStorageItem(cle:string):string{
     return sessionStorage.getItem(cle);
@@ -53,19 +48,15 @@ export class AuthService {
   }
 
   public login(username:string, password:string ):Observable<any> {
-    return this._http.post(this._url, {"login":username, "password":password})
+    return this._http.post(` ${ this.ROOT_URL }/login`, {"login":username, "password":password})
                .pipe(
                     tap((data) => {
-
-                        console.log(data);
                         this.setSessionStorageItem('token', data['token']);
                         this.setSessionStorageItem('refresh_token', data['refresh_token']);
                         this.setSessionStorageItem('username', username);
                     }),
                     catchError(this.errorHandler)
                  );
-        //.do(res => this.setSession) 
-        //.shareReplay();
   }
 
   public logout() {
@@ -73,42 +64,27 @@ export class AuthService {
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('utilisateurInactif');
     sessionStorage.removeItem('refresh_token');
+    this._router.navigate(['/login']);
   }
 
 
   public refreshToken():Observable<any> {
     return this._http.post(`${this.ROOT_URL}/token/refresh`, { 'refresh_token': sessionStorage.getItem('refresh_token') }).pipe(
       tap((res) => {
-        console.log(res['token']);
         this.setSessionStorageItem('token', res['token']);
         this.setSessionStorageItem('refresh_token', res['refresh_token']);
       }),
       catchError((error) =>{
-        console.log(error);
         return throwError(error);
       })
     )
   }
 
   public isLoggedIn() {
-      //return moment().isBefore(this.getExpiration());
       return sessionStorage.getItem('token') !== null;
   }
 
   public isLoggedOut() {
       return !this.isLoggedIn();
   }
-      
-  /*   private setSession(authResult) {
-      const expiresAt = moment().add(authResult.expiresIn,'second');
-      localStorage.setItem('id_token', authResult.idToken);
-      localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
-  }*/       
-
-
-  /*public getExpiration() {
-      const expiration = localStorage.getItem("expires_at");
-      const expiresAt = JSON.parse(expiration);
-      return moment(expiresAt);
-  }*/
 }

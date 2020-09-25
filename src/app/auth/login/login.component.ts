@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { Login } from '../../@models/login';
+import { Login } from '../@models/login';
 import { AuthService } from '../@services/auth.service';
-import { ParametersService } from 'src/app/@shared-services/parameters.service';
+import { ParametersService } from 'src/app/@services/parameters.service';
 
 @Component({
   selector: 'app-login',

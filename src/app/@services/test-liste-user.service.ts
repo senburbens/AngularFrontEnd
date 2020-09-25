@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { User } from '../@models/user';
-import * as moment from "moment";
+import { User } from '../auth/@models/user';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
