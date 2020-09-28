@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ParametersService } from 'src/app/@services/parameters.service';
+import { ParametersService } from '../../@services/parameters.service';
 
 @Component({
   selector: 'app-agenda',
