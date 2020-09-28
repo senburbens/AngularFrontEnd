@@ -1,4 +1,3 @@
-import { Input } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -25,6 +24,11 @@ export class LoginPopupModalComponent implements OnInit {
   endTime = 1;
   unsubscribe$: Subject<void> = new Subject();
   timerSubscription: Subscription;
+
+
+  token:string="";
+  refresh_token:string="";
+  username:string="";
 
   constructor(private _authService: AuthService, private _parameterService: ParametersService) { }
 
@@ -85,9 +89,13 @@ export class LoginPopupModalComponent implements OnInit {
         this._authService.logOutUser();
         this.identifiant = sessionStorage.getItem('username');
         this.utilisateurInactif = true;        
+        this.token = sessionStorage.getItem("token");
+        this.refresh_token = sessionStorage.getItem("refresh_token");
+        this.username = sessionStorage.getItem("username");
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("refresh_token");
-        //sessionStorage.setItem("utilisateurInactif", "true");
+        sessionStorage.removeItem("username");
+        sessionStorage.setItem("utilisateurInactif", "true");
       }
     )
   }
@@ -113,7 +121,16 @@ export class LoginPopupModalComponent implements OnInit {
 
   submit():void{
     this.utilisateurInactif = false;
+    sessionStorage.setItem("token", this.token);
+    sessionStorage.setItem("refresh_token", this.refresh_token);
+    sessionStorage.setItem("username", this.username);
     sessionStorage.setItem('utilisateurInactif', 'false');
+
+    // Pour se reconnecter
+    //this._authService.login(sessionStorage.getItem('username'), "Newbensur3190#").subscribe(
+      //data => {},
+      //error =>{}
+    //);
     this._authService.notifyUserAction();
   }
 
