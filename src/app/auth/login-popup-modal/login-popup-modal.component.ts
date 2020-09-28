@@ -30,11 +30,11 @@ export class LoginPopupModalComponent implements OnInit {
 
   ngOnInit(): void{
 
-    if(sessionStorage.getItem('utilisateurInactif') === null){
+    /*if(sessionStorage.getItem('utilisateurInactif') === null){
       sessionStorage.setItem('utilisateurInactif', 'false');
     }else if (sessionStorage.getItem('utilisateurInactif') === 'true'){
         this.utilisateurInactif = true;
-    }    
+    }  */   
 
     this._parameterService.getParameter("WEBCHIR_TIMEOUT").subscribe(
       data => {
@@ -85,7 +85,9 @@ export class LoginPopupModalComponent implements OnInit {
         this._authService.logOutUser();
         this.identifiant = sessionStorage.getItem('username');
         this.utilisateurInactif = true;        
-        sessionStorage.setItem("utilisateurInactif", "true");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("refresh_token");
+        //sessionStorage.setItem("utilisateurInactif", "true");
       }
     )
   }
