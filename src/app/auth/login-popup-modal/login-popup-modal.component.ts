@@ -26,6 +26,9 @@ export class LoginPopupModalComponent implements OnInit {
   refresh_token:string="";
   username:string="";
 
+  minutesDisplay = 0;
+  secondsDisplay = 0;
+
   constructor(private _authService: AuthService, private _parameterService: ParametersService) { }
 
   ngOnInit(): void{
@@ -71,7 +74,8 @@ export class LoginPopupModalComponent implements OnInit {
     this.timerSubscription = timer(0, interval).pipe(
       take(duration)
     ).subscribe(
-      value => {},
+      value =>
+      {this.render((duration - +value) * interval); console.log((duration - +value) * interval);},
       err => {},
       () => {
         this._authService.logOutUser();
@@ -91,16 +95,40 @@ export class LoginPopupModalComponent implements OnInit {
   submit():void{
     let formValues = this.form.value;
     // Pour se reconnecter
-    this._authService.login(formValues.username, formValues.password).subscribe(
-      () => {
-        this.utilisateurInactif = false;
-        sessionStorage.setItem('utilisateurInactif', 'false');
-      },
-      error =>{
-        this.errorMsg = "Mot de passe invalide !!!";
-      }
-    );
-    this._authService.notifyUserAction();
+    if(formValues.username === this.identifiant ){
+      this._authService.login(formValues.username, formValues.password).subscribe(
+        () => {
+          this.utilisateurInactif = false;
+          sessionStorage.setItem('utilisateurInactif', 'false');
+          this._authService.notifyUserAction();
+        },
+        error =>{
+          this.errorMsg = "Mot de passe invalide !!!";
+        }
+      );
+    }else{
+      this.errorMsg = "Mauvais utilisateur !!!"
+    }
+    // this._authService.notifyUserAction();
+  }
+
+  private render(count) {
+    this.secondsDisplay = this.getSeconds(count);
+    this.minutesDisplay = this.getMinutes(count);
+  }
+
+  private getSeconds(ticks: number) {
+    const seconds = ((ticks % 60000) / 1000).toFixed(0);
+    return this.pad(seconds);
+  }
+
+  private getMinutes(ticks: number) {
+    const minutes = Math.floor(ticks / 60000);
+    return this.pad(minutes);
+  }
+
+  private pad(digit: any) {
+    return digit <= 9 ? '0' + digit : digit;
   }
 
   @HostListener('document:keyup', ['$event'])
