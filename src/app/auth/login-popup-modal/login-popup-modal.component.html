@@ -1,18 +1,16 @@
 <div id="modal" [style.visibility]="utilisateurInactif ? 'visible' : 'hidden'">
     <div class="loginBox">
-        <h1>Période d'inactivité</h1> <br />
-        <!-- <h1> {{ (minutesDisplay) }}:{{ (secondsDisplay) && (secondsDisplay
-            <=59) ? secondsDisplay : '00' }} </h1> -->
-        <span id="error_message"></span>
-        <form novalidate>
+        <h1>Période d'inactivité</h1>
+        <span id="error_message">{{ errorMsg }}</span>
+        <form [formGroup]="form" novalidate>
             <div class="form-group">
                 <label for="identifiant">Identifiant</label>
-                <input type="text" disabled class="form-control" id="identifiant" name="identifiant" [value]="identifiant" />
+                <input type="text" class="form-control" id="identifiant" formControlName="username" disabled />
                 <!-- <span class="input_error_message">Email invalide</span> -->
             </div>
             <div class="form-group">
                 <label for="motdepasse">Mot de passe</label>
-                <input type="password" class="form-control" id="motdepasse" name="motdepasse" />
+                <input type="password" class="form-control" id="motdepasse" formControlName="password" />
                 <!-- <span class="input_error_message">Mot de passe invalide</span> -->
             </div>
             <div class="form-group button_div">

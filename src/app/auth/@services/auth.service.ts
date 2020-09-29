@@ -9,11 +9,12 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  // private roles:string[] = [];
   private readonly ROOT_URL = 'http://localhost:8000/api';
-
   _userActionOccured: Subject<void> = new Subject();
-  get userActionOccured(): Observable<void> { return this._userActionOccured.asObservable() };
+
+  get userActionOccured(): Observable<void> { 
+    return this._userActionOccured.asObservable() 
+  };
 
   notifyUserAction() {
     this._userActionOccured.next();
@@ -24,6 +25,7 @@ export class AuthService {
   }
 
   constructor(private _http: HttpClient, private _router:Router) {}
+
 
   public getSessionStorageItem(cle:string):string{
     return sessionStorage.getItem(cle);

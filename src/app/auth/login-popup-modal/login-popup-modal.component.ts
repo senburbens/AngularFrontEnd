@@ -18,14 +18,10 @@ export class LoginPopupModalComponent implements OnInit {
   identifiant:string='';
   form: FormGroup;
   loginModel = new Login('','');
-
-  minutesDisplay = 0;
-  secondsDisplay = 0;
+  errorMsg:string = '';
   endTime = 1;
   unsubscribe$: Subject<void> = new Subject();
   timerSubscription: Subscription;
-
-
   token:string="";
   refresh_token:string="";
   username:string="";
@@ -33,13 +29,6 @@ export class LoginPopupModalComponent implements OnInit {
   constructor(private _authService: AuthService, private _parameterService: ParametersService) { }
 
   ngOnInit(): void{
-
-    /*if(sessionStorage.getItem('utilisateurInactif') === null){
-      sessionStorage.setItem('utilisateurInactif', 'false');
-    }else if (sessionStorage.getItem('utilisateurInactif') === 'true'){
-        this.utilisateurInactif = true;
-    }  */   
-
     this._parameterService.getParameter("WEBCHIR_TIMEOUT").subscribe(
       data => {
         this.endTime = parseInt(data[0]["valeurParam"]) / 1000 / 60;
@@ -60,15 +49,14 @@ export class LoginPopupModalComponent implements OnInit {
       this.resetTimer();
     });
 
-    this.form = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.minLength(4)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)])
-    });
+    this.initForm();
   }
 
-  btnAddPatient(): void{
-    console.log(this.form);
-    console.log(this.form.value);
+  initForm() {
+    this.form = new FormGroup({
+      username: new FormControl(this.identifiant, [ Validators.required, Validators.minLength(4) ]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)])
+    });
   }
 
   ngOnDestroy() {
@@ -82,9 +70,9 @@ export class LoginPopupModalComponent implements OnInit {
     //const duration = endTime * 60;
     this.timerSubscription = timer(0, interval).pipe(
       take(duration)
-    ).subscribe(value =>
-      {this.render((duration - +value) * interval); console.log((duration - +value) * interval);},
-      err => { },
+    ).subscribe(
+      value => {},
+      err => {},
       () => {
         this._authService.logOutUser();
         this.identifiant = sessionStorage.getItem('username');
@@ -100,48 +88,25 @@ export class LoginPopupModalComponent implements OnInit {
     )
   }
 
-  private render(count) {
-    this.secondsDisplay = this.getSeconds(count);
-    this.minutesDisplay = this.getMinutes(count);
-  }
-
-  private getSeconds(ticks: number) {
-    const seconds = ((ticks % 60000) / 1000).toFixed(0);
-    return this.pad(seconds);
-  }
-
-  private getMinutes(ticks: number) {
-    const minutes = Math.floor(ticks / 60000);
-    return this.pad(minutes);
-  }
-
-  private pad(digit: any) {
-    return digit <= 9 ? '0' + digit : digit;
-  }
-
   submit():void{
-    this.utilisateurInactif = false;
-    sessionStorage.setItem("token", this.token);
-    sessionStorage.setItem("refresh_token", this.refresh_token);
-    sessionStorage.setItem("username", this.username);
-    sessionStorage.setItem('utilisateurInactif', 'false');
-
+    let formValues = this.form.value;
     // Pour se reconnecter
-    //this._authService.login(sessionStorage.getItem('username'), "Newbensur3190#").subscribe(
-      //data => {},
-      //error =>{}
-    //);
+    this._authService.login(formValues.username, formValues.password).subscribe(
+      () => {
+        this.utilisateurInactif = false;
+        sessionStorage.setItem('utilisateurInactif', 'false');
+      },
+      error =>{
+        this.errorMsg = "Mot de passe invalide !!!";
+      }
+    );
     this._authService.notifyUserAction();
   }
-
 
   @HostListener('document:keyup', ['$event'])
   @HostListener('document:click', ['$event'])
   @HostListener('document:wheel', ['$event'])
-  // @HostListener('document:mousemove', ['$event'])
   resetTimerAction() {
-    if(sessionStorage.getItem('utilisateurInactif') !== 'true'){
       this._authService.notifyUserAction();
-    }    
   }  
 }

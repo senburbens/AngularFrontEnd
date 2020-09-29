@@ -20,6 +20,11 @@ export class LoginComponent implements OnInit {
   constructor(private _authService: AuthService, private router: Router, private _parameterService: ParametersService) {}
 
   ngOnInit(): void {
+    this.getPasswordFormat();
+    this.getPasswordFormatMessage();
+  }
+
+  public getPasswordFormat(){
     this._parameterService.getParameter('FORMAT_PWD').
         subscribe(
             data => {
@@ -29,7 +34,9 @@ export class LoginComponent implements OnInit {
               console.log(error);
             }
     );
+  }
 
+  public getPasswordFormatMessage(){
     this._parameterService.getParameter('FORMAT_PWD_commentaire ').
     subscribe(
         data => {
