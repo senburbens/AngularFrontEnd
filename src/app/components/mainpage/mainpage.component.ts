@@ -21,8 +21,7 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(sessionStorage.getItem('token'));
-    console.log("Decoded access token ", this._authService.getDecodedAccessToken(sessionStorage.getItem('token')));
+    console.log(sessionStorage.getItem('token'), "Decoded access token ", this._authService.getDecodedAccessToken(sessionStorage.getItem('token')));
 
     this._parameterService.getParameter('MENU_DISPOSITION_WC')
       .subscribe(data => {       
