@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ParametersService } from '../../@services/parameters.service';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/auth/@services/auth.service';
 
 @Component({
   selector: 'app-mainpage',
@@ -14,10 +15,14 @@ export class MainPageComponent implements OnInit {
 
   constructor(
     private _parameterService: ParametersService, 
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _authService: AuthService
     ) {}
 
   ngOnInit(): void {
+
+    console.log(sessionStorage.getItem('token'));
+    console.log("Decoded access token ", this._authService.getDecodedAccessToken(sessionStorage.getItem('token')));
 
     this._parameterService.getParameter('MENU_DISPOSITION_WC')
       .subscribe(data => {       

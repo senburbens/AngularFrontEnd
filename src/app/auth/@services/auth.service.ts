@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, Subject, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
@@ -16,16 +17,27 @@ export class AuthService {
     return this._userActionOccured.asObservable() 
   };
 
-  notifyUserAction() {
+  public notifyUserAction() {
     this._userActionOccured.next();
   }
 
-  logOutUser() {
+  public logOutUser() {
     console.log('user logout');
   }
 
   constructor(private _http: HttpClient, private _router:Router) {}
 
+
+  public getDecodedAccessToken(token: string): any {
+    try{
+      const helper = new JwtHelperService();
+      const decoded= helper.decodeToken(token);
+      return decoded;
+    }
+    catch(Error){
+        return null;
+    }
+  }
 
   public getSessionStorageItem(cle:string):string{
     return sessionStorage.getItem(cle);

@@ -58,6 +58,7 @@ export class LoginPopupModalComponent implements OnInit {
   initForm() {
     this.form = new FormGroup({
       username: new FormControl(this.identifiant, [ Validators.required, Validators.minLength(4) ]),
+      //username: new FormControl({ value : this.identifiant, disabled : true }, [ Validators.required, Validators.minLength(4) ]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
   }
@@ -102,9 +103,7 @@ export class LoginPopupModalComponent implements OnInit {
           sessionStorage.setItem('utilisateurInactif', 'false');
           this._authService.notifyUserAction();
         },
-        error =>{
-          this.errorMsg = "Mot de passe invalide !!!";
-        }
+        (error) =>{ this.errorMsg = "Mot de passe invalide !!!"; }
       );
     }else{
       this.errorMsg = "Mauvais utilisateur !!!"
