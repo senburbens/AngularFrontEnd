@@ -99,6 +99,8 @@ export class LoginPopupModalComponent implements OnInit {
     if(formValues.username === this.identifiant ){
       this._authService.login(formValues.username, formValues.password).subscribe(
         () => {
+          this.form.get('password').reset();
+          // this.form.setValue({password: ''});
           this.utilisateurInactif = false;
           sessionStorage.setItem('utilisateurInactif', 'false');
           this._authService.notifyUserAction();
