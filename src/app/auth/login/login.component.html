@@ -2,7 +2,8 @@
     <div class="loginPage">
         <span id="error_message">{{ loginErrorMessage }}</span>
         <div class="loginBox">
-            <h1><img src="../../assets/evolucare_logo.png" alt="logo evolucare" />WebConsult <img src="../../assets/logo_hw.png" alt="logo hopital web" /></h1>
+            <h1><img src="../../assets/evolucare_logo.png" alt="logo evolucare" />WebConsult
+                <!-- <img src="../../assets/logo_hw.png" alt="logo hopital web" /> --></h1>
             <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
                 <div class="form-group">
                     <label for="identifiant">Identifiant</label>
@@ -20,7 +21,6 @@
                     <button class="btn btn-primary" type="submit" [disabled]="loginForm.invalid">Entrer</button>
                     <button class="btn btn-danger" (click)="exit($event)">Sortir</button>
                 </div>
-                <a routerLink="/agenda">Agenda</a>
             </form>
             <span><a href="#" style="color:#96bef2">Qui sommes-nous ?</a></span>
         </div>

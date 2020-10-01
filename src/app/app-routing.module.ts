@@ -8,6 +8,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AgendaComponent } from './agenda/agenda/agenda.component';
 import { AgendaDayComponent } from './agenda/agenda-day/agenda-day.component';
 import { ListUsersResolverService } from './@resolvers/list-users-resolver.service';
+import { DynamicFOrmTestComponent } from './components/dynamic-form-test/dynamic-form-test.component';
 
 const routes: Routes = [
 
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'agenda', component: AgendaComponent },
   { path: 'agendaday', component: AgendaDayComponent },
   { path: 'login', component: LoginComponent, canActivate : [LoginGuard] },
+  { path: 'dynamicformtest', component: DynamicFOrmTestComponent },
   { path: '', redirectTo : 'login', pathMatch : 'full'},
   { path: '**', component: PageNotFoundComponent }
 ];

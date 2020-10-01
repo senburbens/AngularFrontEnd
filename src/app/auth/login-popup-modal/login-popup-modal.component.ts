@@ -14,20 +14,20 @@ import { Login } from 'src/app/auth/@models/login';
 })
 export class LoginPopupModalComponent implements OnInit {
 
+  unsubscribe$: Subject<void> = new Subject();
+  timerSubscription: Subscription;
+  loginModel:Login = new Login('','');
+
   utilisateurInactif:boolean=false;
   identifiant:string='';
   form: FormGroup;
-  loginModel = new Login('','');
   errorMsg:string = '';
-  endTime = 1;
-  unsubscribe$: Subject<void> = new Subject();
-  timerSubscription: Subscription;
+  endTime:number = 1;
   token:string="";
   refresh_token:string="";
   username:string="";
-
-  minutesDisplay = 0;
-  secondsDisplay = 0;
+  minutesDisplay:number = 0;
+  secondsDisplay:number = 0;
 
   constructor(private _authService: AuthService, private _parameterService: ParametersService) { }
 
@@ -36,10 +36,11 @@ export class LoginPopupModalComponent implements OnInit {
       data => {
         this.endTime = parseInt(data[0]["valeurParam"]) / 1000 / 60;
       },
-      error =>{
+      error => {
         console.log(error);
       }
     );
+
     this.identifiant = sessionStorage.getItem('username');
     this.resetTimer();
 

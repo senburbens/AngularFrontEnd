@@ -20,6 +20,8 @@ import { AgendaModule } from './agenda/agenda.module';
 import { ListUsersResolverService } from './@resolvers/list-users-resolver.service';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
+import { DynamicFOrmTestComponent } from './components/dynamic-form-test/dynamic-form-test.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -32,13 +34,15 @@ import { reducers, metaReducers } from './reducers';
     PageNotFoundComponent,
     WrapperVComponent,
     WrapperHComponent,
-    LangDropdownComponent
+    LangDropdownComponent,
+    DynamicFOrmTestComponent
   ],
   imports: [
     BrowserModule, 
     AppRoutingModule, 
     AuthModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule, 
     AgendaModule,
     TranslateModule.forRoot({
       loader: {
