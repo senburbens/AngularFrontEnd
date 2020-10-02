@@ -33,14 +33,12 @@ export class AuthInterceptor implements HttpInterceptor {
       }else if(error instanceof HttpErrorResponse && error.status === 401){
           const re = "/api/login";
           if (request.url.search(re) === -1 ) {
-            console.log(request.url);
             this.authService.logout();
             return throwError(error);
           }else{
             return throwError(error);
           }
       }else {
-        console.log(error);
         this.authService.logout();
         return throwError(error);
       }

@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
               this.passwordFormat = data[0]['valeurParam'];
             },
             error => {
-              console.log(error);
+              this.loginErrorMessage = error;
             }
     );
   }
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
           this.passwordFormatErrorMessage = data[0]['valeurParam'];
         },
         error => {
-          console.log(error);
+          this.loginErrorMessage = error;
         }
     );
   }
