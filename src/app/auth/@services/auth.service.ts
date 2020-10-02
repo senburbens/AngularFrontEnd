@@ -14,7 +14,7 @@ export class AuthService {
   _userActionOccured: Subject<void> = new Subject();
 
   get userActionOccured(): Observable<void> { 
-    return this._userActionOccured.asObservable() 
+      return this._userActionOccured.asObservable() 
   };
 
   public notifyUserAction() {

@@ -16,9 +16,9 @@ export class DynamicFOrmTestComponent implements OnInit {
 
   ngOnInit(): void {
     let group = {}    
-    form_template.forEach(input_template=>{
+    form_template.forEach(input_template => {
       group[input_template.label]=new FormControl('');  
-    })
+    });
     this.myFormGroup = new FormGroup(group);
   }
 

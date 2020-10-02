@@ -1,4 +1,4 @@
-import { HostListener } from '@angular/core';
+import { HostListener, OnDestroy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../@services/auth.service';
@@ -12,12 +12,11 @@ import { Login } from 'src/app/auth/@models/login';
   templateUrl: './login-popup-modal.component.html',
   styleUrls: ['./login-popup-modal.component.css']
 })
-export class LoginPopupModalComponent implements OnInit {
+export class LoginPopupModalComponent implements OnInit, OnDestroy {
 
   unsubscribe$: Subject<void> = new Subject();
   timerSubscription: Subscription;
   loginModel:Login = new Login('','');
-
   utilisateurInactif:boolean=false;
   identifiant:string='';
   form: FormGroup;
@@ -31,17 +30,18 @@ export class LoginPopupModalComponent implements OnInit {
 
   constructor(private _authService: AuthService, private _parameterService: ParametersService) { }
 
-  ngOnInit(): void{
+  private getWebChirTimeout() {
     this._parameterService.getParameter("WEBCHIR_TIMEOUT").subscribe(
-      data => {
-        this.endTime = parseInt(data[0]["valeurParam"]) / 1000 / 60;
-      },
-      error => {
-        console.log(error);
-      }
+      data => { this.endTime = parseInt(data[0]["valeurParam"]) / 1000 / 60; },
+      error => { console.log(error); }
     );
+  }
 
+  ngOnInit(): void{
+
+    this.getWebChirTimeout();
     this.identifiant = sessionStorage.getItem('username');
+
     this.resetTimer();
 
     this._authService.userActionOccured.pipe(
@@ -67,6 +67,9 @@ export class LoginPopupModalComponent implements OnInit {
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
   }
 
   resetTimer(endTime: number = this.endTime) {
@@ -101,6 +104,7 @@ export class LoginPopupModalComponent implements OnInit {
       this._authService.login(formValues.username, formValues.password).subscribe(
         () => {
           this.form.get('password').reset();
+          this.errorMsg = "";
           // this.form.setValue({password: ''});
           this.utilisateurInactif = false;
           sessionStorage.setItem('utilisateurInactif', 'false');
