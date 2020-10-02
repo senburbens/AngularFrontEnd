@@ -14,6 +14,9 @@ export class AuthService {
   private readonly ROOT_URL = constants.ROOT_URL;
   _userActionOccured: Subject<void> = new Subject();
 
+
+  constructor(private _http: HttpClient, private _router:Router) {}
+
   get userActionOccured(): Observable<void> { 
       return this._userActionOccured.asObservable() 
   };
@@ -25,10 +28,7 @@ export class AuthService {
   public timesUp() {
     console.log('Times Up');
   }
-
-  constructor(private _http: HttpClient, private _router:Router) {}
-
-
+  
   public getDecodedAccessToken(token: string): any {
     try{
       const helper = new JwtHelperService();
