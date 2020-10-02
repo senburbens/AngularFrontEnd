@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   constructor(private _authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    this.username = sessionStorage.getItem('username');
+    this.username = this._authService.getDecodedAccessToken(sessionStorage.getItem('token')).username; //sessionStorage.getItem('username');
   }
 
   logout(){

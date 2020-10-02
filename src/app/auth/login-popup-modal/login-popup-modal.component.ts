@@ -40,7 +40,7 @@ export class LoginPopupModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void{
 
     this.getWebChirTimeout();
-    this.identifiant = sessionStorage.getItem('username');
+    this.identifiant = this._authService.getDecodedAccessToken(sessionStorage.getItem('token')).username; //sessionStorage.getItem('username');
 
     this.resetTimer();
 
@@ -83,15 +83,15 @@ export class LoginPopupModalComponent implements OnInit, OnDestroy {
       {this.render((duration - +value) * interval); console.log((duration - +value) * interval);},
       err => {},
       () => {
-        this._authService.logOutUser();
-        this.identifiant = sessionStorage.getItem('username');
+        this._authService.timesUp();
+        this.identifiant = this._authService.getDecodedAccessToken(sessionStorage.getItem('token')).username; //sessionStorage.getItem('username');
         this.utilisateurInactif = true;        
         this.token = sessionStorage.getItem("token");
         this.refresh_token = sessionStorage.getItem("refresh_token");
-        this.username = sessionStorage.getItem("username");
+        this.username = this._authService.getDecodedAccessToken(sessionStorage.getItem('token')).username; //sessionStorage.getItem("username");
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("refresh_token");
-        sessionStorage.removeItem("username");
+        // sessionStorage.removeItem("username");
         sessionStorage.setItem("utilisateurInactif", "true");
       }
     )

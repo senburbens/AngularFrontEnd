@@ -4,13 +4,14 @@ import { catchError, tap } from 'rxjs/operators';
 import { Observable, Subject, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { constants } from '../constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
 
-  private readonly ROOT_URL = 'http://localhost:8000/api';
+  private readonly ROOT_URL = constants.ROOT_URL;
   _userActionOccured: Subject<void> = new Subject();
 
   get userActionOccured(): Observable<void> { 
@@ -21,8 +22,8 @@ export class AuthService {
     this._userActionOccured.next();
   }
 
-  public logOutUser() {
-    console.log('user logout');
+  public timesUp() {
+    console.log('Times Up');
   }
 
   constructor(private _http: HttpClient, private _router:Router) {}
@@ -67,7 +68,7 @@ export class AuthService {
                     tap((data) => {
                         this.setSessionStorageItem('token', data['token']);
                         this.setSessionStorageItem('refresh_token', data['refresh_token']);
-                        this.setSessionStorageItem('username', username);
+                        // this.setSessionStorageItem('username', username);
                     }),
                     catchError(this.errorHandler)
                  );
@@ -75,7 +76,7 @@ export class AuthService {
 
   public logout() {
     sessionStorage.removeItem('token');
-    sessionStorage.removeItem('username');
+    // sessionStorage.removeItem('username');
     sessionStorage.removeItem('utilisateurInactif');
     sessionStorage.removeItem('refresh_token');
     this._router.navigate(['/login']);
