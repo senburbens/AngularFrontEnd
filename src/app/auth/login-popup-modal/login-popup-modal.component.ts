@@ -21,7 +21,7 @@ export class LoginPopupModalComponent implements OnInit, OnDestroy {
   identifiant:string='';
   form: FormGroup;
   errorMsg:string = '';
-  endTime:number = 1;
+  endTime:number = 5;
   token:string="";
   refresh_token:string="";
   username:string="";
@@ -74,8 +74,8 @@ export class LoginPopupModalComponent implements OnInit, OnDestroy {
 
   resetTimer(endTime: number = this.endTime) {
     const interval = 1000;
-    const duration = 1 * 60;
-    //const duration = endTime * 60;
+    //const duration = 1 * 60;
+    const duration = endTime * 60;
     this.timerSubscription = timer(0, interval).pipe(
       take(duration)
     ).subscribe(
@@ -92,7 +92,7 @@ export class LoginPopupModalComponent implements OnInit, OnDestroy {
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("refresh_token");
         // sessionStorage.removeItem("username");
-        sessionStorage.setItem("utilisateurInactif", "true");
+        //sessionStorage.setItem("utilisateurInactif", "true");
       }
     )
   }
@@ -107,7 +107,7 @@ export class LoginPopupModalComponent implements OnInit, OnDestroy {
           this.errorMsg = "";
           // this.form.setValue({password: ''});
           this.utilisateurInactif = false;
-          sessionStorage.setItem('utilisateurInactif', 'false');
+          //sessionStorage.setItem('utilisateurInactif', 'false');
           this._authService.notifyUserAction();
         },
         (error) =>{ this.errorMsg = "Mot de passe invalide !!!"; }

@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     if(this._authService.isLoggedIn()){
       return true;
     }else{
-      sessionStorage.removeItem('utilisateurInactif');
+      //sessionStorage.removeItem('utilisateurInactif');
       this._router.navigate(['/login']);
       return false
     }

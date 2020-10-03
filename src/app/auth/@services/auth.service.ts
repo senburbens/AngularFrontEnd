@@ -77,7 +77,7 @@ export class AuthService {
   public logout() {
     sessionStorage.removeItem('token');
     // sessionStorage.removeItem('username');
-    sessionStorage.removeItem('utilisateurInactif');
+    //sessionStorage.removeItem('utilisateurInactif');
     sessionStorage.removeItem('refresh_token');
     this._router.navigate(['/login']);
   }
