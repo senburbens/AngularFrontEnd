@@ -18,10 +18,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './auth/@interceptors/auth.interceptor';
 import { AgendaModule } from './agenda/agenda.module';
 import { ListUsersResolverService } from './@resolvers/list-users-resolver.service';
-import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
 import { DynamicFOrmTestComponent } from './components/dynamic-form-test/dynamic-form-test.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { StoreModule } from '@ngrx/store';
+import { counterReducer } from './auth/@reducers/counter.reducer';
+import * as fromAuthLoginSuccesfull from './auth/@reducers/tokens.reducer';
 
 
 @NgModule({
@@ -51,9 +54,8 @@ import { ReactiveFormsModule } from "@angular/forms";
           deps: [HttpClient]
       }
     }),
-    StoreModule.forRoot(reducers, {
-      metaReducers
-    })
+    StoreModule.forRoot({ count : counterReducer, tokens :  fromAuthLoginSuccesfull.reducer }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [
     ListUsersResolverService,

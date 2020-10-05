@@ -4,7 +4,11 @@ import { catchError, tap } from 'rxjs/operators';
 import { Observable, Subject, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Store } from '@ngrx/store';
+import { increment } from '../@actions/counter.actions';
+import { setTokens } from '../@actions/tokens.actions';
 import { constants } from '../constants';
+import { Tokens } from '../@models/tokens';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +18,12 @@ export class AuthService {
   private readonly ROOT_URL = constants.ROOT_URL;
   _userActionOccured: Subject<void> = new Subject();
 
+  count$: Observable<number>;
 
-  constructor(private _http: HttpClient, private _router:Router) {}
+  constructor(private _http: HttpClient, private _router:Router, private store: Store<{ count: number, tokens : Tokens }>) {
+        // TODO: This stream will connect to the current store `count` state
+        this.count$ = store.select('count');
+  }
 
   get userActionOccured(): Observable<void> { 
       return this._userActionOccured.asObservable() 
@@ -68,7 +76,9 @@ export class AuthService {
                     tap((data) => {
                         this.setSessionStorageItem('token', data['token']);
                         this.setSessionStorageItem('refresh_token', data['refresh_token']);
-                        // this.setSessionStorageItem('username', username);
+                        this.store.dispatch(increment());
+                        this.store.dispatch(increment());
+                        this.store.dispatch(setTokens({tokens : { token : data['token'], refresh_token : data['refresh_token']}}));
                     }),
                     catchError(this.errorHandler)
                  );
@@ -76,8 +86,6 @@ export class AuthService {
 
   public logout() {
     sessionStorage.removeItem('token');
-    // sessionStorage.removeItem('username');
-    //sessionStorage.removeItem('utilisateurInactif');
     sessionStorage.removeItem('refresh_token');
     this._router.navigate(['/login']);
   }

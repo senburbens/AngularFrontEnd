@@ -74,7 +74,6 @@ export class LoginPopupModalComponent implements OnInit, OnDestroy {
 
   resetTimer(endTime: number = this.endTime) {
     const interval = 1000;
-    //const duration = 1 * 60;
     const duration = endTime * 60;
     this.timerSubscription = timer(0, interval).pipe(
       take(duration)
@@ -84,15 +83,13 @@ export class LoginPopupModalComponent implements OnInit, OnDestroy {
       err => {},
       () => {
         this._authService.timesUp();
-        this.identifiant = this._authService.getDecodedAccessToken(sessionStorage.getItem('token')).username; //sessionStorage.getItem('username');
+        this.identifiant = this._authService.getDecodedAccessToken(sessionStorage.getItem('token')).username;
         this.utilisateurInactif = true;        
         this.token = sessionStorage.getItem("token");
         this.refresh_token = sessionStorage.getItem("refresh_token");
-        this.username = this._authService.getDecodedAccessToken(sessionStorage.getItem('token')).username; //sessionStorage.getItem("username");
+        this.username = this._authService.getDecodedAccessToken(sessionStorage.getItem('token')).username;
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("refresh_token");
-        // sessionStorage.removeItem("username");
-        //sessionStorage.setItem("utilisateurInactif", "true");
       }
     )
   }
@@ -105,9 +102,7 @@ export class LoginPopupModalComponent implements OnInit, OnDestroy {
         () => {
           this.form.get('password').reset();
           this.errorMsg = "";
-          // this.form.setValue({password: ''});
           this.utilisateurInactif = false;
-          //sessionStorage.setItem('utilisateurInactif', 'false');
           this._authService.notifyUserAction();
         },
         (error) =>{ this.errorMsg = "Mot de passe invalide !!!"; }
@@ -115,7 +110,6 @@ export class LoginPopupModalComponent implements OnInit, OnDestroy {
     }else{
       this.errorMsg = "Mauvais utilisateur !!!"
     }
-    // this._authService.notifyUserAction();
   }
 
   private render(count) {
