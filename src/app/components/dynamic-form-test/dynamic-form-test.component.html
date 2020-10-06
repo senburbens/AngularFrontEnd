@@ -1,4 +1,4 @@
-<div class="dynamicformtest container">
+<!-- <div class="dynamicformtest container">
     <h1>Formulaire dynamique</h1>
     <form [formGroup]="myFormGroup" (ngSubmit)="onSubmit()">
         <div *ngFor="let form_elem of formTemplate">
@@ -24,4 +24,37 @@
         </div>
         <input class="btn btn-primary" type="submit" value="save" />
     </form>
-</div>
+</div> -->
+
+
+<div class="dynamicformtest container">
+    <h1>Formulaire dynamique</h1>
+    <form [formGroup]="myFormGroup" (ngSubmit)="onSubmit()">
+        <div *ngFor="let form_elem of formtemplateFromAPI">
+            <div [ngSwitch]="form_elem.type.libelle">
+                <div *ngSwitchCase="'MULTILINETEXT'" class="form-group">
+                    <textarea class="form-control">
+                    </textarea>
+                </div>
+                <div *ngSwitchCase="'TEXT'" class="form-group">
+                    <input type="text" class="form-control" />
+                </div>
+                <div *ngSwitchCase="'RADIO'" class="form-group">
+                    <input type="radio" class="form-control" />
+                </div>
+                <div *ngSwitchCase="'CHECKBOX'" class="form-group">
+                    <input type="checkbox" class="form-control" />
+                </div>
+                <div *ngSwitchCase="'DATE'" class="form-group">
+                    <input type="date">
+                </div>
+                <div *ngSwitchCase="'HEURE'" class="form-group">
+                    <input type="time">
+                </div>
+                <div *ngSwitchDefault="'MULTILINETEXT'" class="form-group">
+                    {{ form_elem.type.libelle }}
+                </div>
+            </div>
+        </div>
+        <input class="btn btn-primary" type="submit" value="save" />
+    </form>
